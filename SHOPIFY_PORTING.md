@@ -17,7 +17,7 @@ The preview deliberately mirrors Shopify Online Store theme architecture without
 | Unboxing | `sections/unboxing-feature.liquid` |
 | Kickstarter status | `sections/campaign-status.liquid` with the official Kickstarter card embed and deadline setting |
 | FAQ | `sections/faq.liquid` with question blocks |
-| Final CTA and questions form | `sections/campaign-cta.liquid` using Shopify’s native `{% form 'contact' %}` |
+| Final CTA and questions form | `sections/campaign-cta.liquid` using Shopify’s native contact-form Liquid tag |
 | Footer | `sections/footer.liquid` inside `sections/footer-group.json` |
 
 The homepage becomes `templates/index.json`, listing these sections in the approved order.
@@ -36,7 +36,7 @@ No app or backend is required.
 
 ## Contact form migration
 
-The GitHub preview demonstrates the form layout and validation without pretending to send data. In Shopify, wrap the same Name, Email and Question fields in Shopify’s native `{% form 'contact' %}` tag so submissions use the store’s contact system without a third-party form service.
+The GitHub preview demonstrates the form layout and validation without pretending to send data. In Shopify, wrap the same Name, Email and Question fields in Shopify’s native contact-form Liquid tag so submissions use the store’s contact system without a third-party form service.
 
 ## Theme settings
 
