@@ -61,7 +61,7 @@ The preview links to the current Kickstarter campaign. When MILLRAT Pack! exists
 - Semantic HTML is already section-scoped through `data-section` attributes.
 - Styling is centralized, responsive and free from framework dependencies.
 - JavaScript uses no packages or build tooling.
-- Motion uses CSS keyframes, hover states and a small native `IntersectionObserver`; these can move directly into Shopify theme assets without an app.
+- Motion uses CSS keyframes, hover states, native pointer events and a small `IntersectionObserver`; the live hero badge, image tilt, moving strip, accordion steps and chooser celebration can move directly into Shopify theme assets without an app.
 - Reduced-motion preferences soften or slow the decorative motion while preserving the continuous campaign strip and visible content.
 - External campaign images must be replaced with originals supplied by MILLRAT Studio.
 - No account, checkout, search or customer logic is simulated in the preview.

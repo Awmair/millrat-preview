@@ -214,6 +214,11 @@ function initializePreview() {
     meetButton.hidden = false;
     meetButton.innerHTML = `Meet ${game.title} <span aria-hidden="true">↓</span>`;
     result.hidden = false;
+    result.classList.remove("is-celebrating");
+    if (!prefersReducedMotion()) {
+      window.requestAnimationFrame(() => result.classList.add("is-celebrating"));
+      window.setTimeout(() => result.classList.remove("is-celebrating"), 1100);
+    }
     result.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
   }
 
@@ -225,6 +230,7 @@ function initializePreview() {
     resultTitle.textContent = "No exact match yet";
     resultCopy.textContent = "Try a little more time or a different group size.";
     meetButton.hidden = true;
+    result.classList.remove("is-celebrating");
     result.hidden = false;
     result.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
   }
@@ -265,6 +271,7 @@ function initializePreview() {
   restartButton.addEventListener("click", () => {
     form.reset();
     result.hidden = true;
+    result.classList.remove("is-celebrating");
     error.hidden = true;
     recommendedGame = null;
     form.querySelector("input").focus();
