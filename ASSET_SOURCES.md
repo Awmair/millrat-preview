@@ -15,6 +15,9 @@ The source workspace did not contain downloadable MILLRAT asset files. To avoid 
 | Nick and Adam | `https://images.backerkit.com/active_storage/backerkit_production/blob/vss1gqonro5n0t0xfa58cxu9m2bw` |
 | Pack lifestyle/about image | `https://images.backerkit.com/active_storage/backerkit_production/blob/y4v7p4reqro0g3w0le2kbgk66kmy` |
 | Production-copy/unboxing image | `https://images.backerkit.com/active_storage/backerkit_production/blob/29sqhtn9d3qb2tjcruizyf5je2yu` |
+
+The local `assets/images/hero-live-kickstarter.png` is an AI-assisted preview derivative of the official hero image above, created only to replace its expired launch-date badge with “LIVE ON KICKSTARTER.” It should be replaced by a MILLRAT Studio-supplied final export before production.
+
 The header and footer use the original typographic MILLRAT Studio wordmark treatment from this preview. No external or generated logo file is used.
 
-Decorative paper, tape, dots, borders and sticker treatments are CSS only. No stock or AI-generated imagery is used.
+Decorative paper, tape, dots, borders and sticker treatments are CSS only. No stock imagery is used.

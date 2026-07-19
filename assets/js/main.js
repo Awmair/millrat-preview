@@ -188,12 +188,136 @@ function initializeTilt() {
   });
 }
 
+function initializeMagneticButtons() {
+  if (prefersReducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  document.querySelectorAll(".button").forEach((button) => {
+    function resetMagnet() {
+      button.style.setProperty("--magnet-x", "0px");
+      button.style.setProperty("--magnet-y", "0px");
+    }
+
+    button.addEventListener("pointermove", (event) => {
+      const bounds = button.getBoundingClientRect();
+      const x = Math.max(-7, Math.min(7, (event.clientX - bounds.left - bounds.width / 2) * .12));
+      const y = Math.max(-5, Math.min(5, (event.clientY - bounds.top - bounds.height / 2) * .14));
+      button.style.setProperty("--magnet-x", `${x.toFixed(2)}px`);
+      button.style.setProperty("--magnet-y", `${y.toFixed(2)}px`);
+    });
+
+    button.addEventListener("pointerleave", resetMagnet);
+    button.addEventListener("blur", resetMagnet);
+  });
+}
+
+function initializeSectionTransitions() {
+  const sections = document.querySelectorAll([
+    ".lineup",
+    ".chooser",
+    ".game-panel",
+    ".play-anywhere",
+    ".story",
+    ".unboxing",
+    ".campaign-status",
+    ".faq",
+    ".final-cta"
+  ].join(","));
+  const colors = ["#ffd508", "#06cd78", "#f46f62", "#46b9d8", "#e9a9b8"];
+
+  sections.forEach((section, index) => {
+    section.classList.add("section-wipe");
+    section.style.setProperty("--wipe-color", colors[index % colors.length]);
+    section.style.setProperty("--wipe-origin", index % 2 === 0 ? "left center" : "right center");
+  });
+
+  if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
+    sections.forEach((section) => section.classList.add("is-section-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-section-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: .04, rootMargin: "0px 0px -12%" });
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+function initializeScrollTrail() {
+  if (prefersReducedMotion() || window.innerWidth <= 980) return;
+
+  const trail = document.createElement("div");
+  trail.className = "scroll-trail";
+  trail.setAttribute("aria-hidden", "true");
+  trail.innerHTML = '<span class="scroll-trail__lead">✦</span><span class="scroll-trail__dot"></span><span class="scroll-trail__dot"></span><span class="scroll-trail__dot"></span><span class="scroll-trail__dot"></span>';
+  document.body.appendChild(trail);
+  const markers = [...trail.children];
+  let scheduled = false;
+
+  function updateTrail() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    const start = 100;
+    const end = Math.max(start, window.innerHeight - 72);
+    const leadY = start + (end - start) * progress;
+
+    markers.forEach((marker, index) => {
+      const y = Math.max(48, leadY - index * 13);
+      const x = Math.sin(progress * Math.PI * 7 + index * .85) * 3;
+      const scale = index === 0 ? 1 : Math.max(.58, 1 - index * .1);
+      marker.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale})`;
+    });
+
+    trail.classList.toggle("is-active", window.scrollY > 36 && scrollable > 0);
+    scheduled = false;
+  }
+
+  function requestTrailUpdate() {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(updateTrail);
+  }
+
+  window.addEventListener("scroll", requestTrailUpdate, { passive: true });
+  window.addEventListener("resize", requestTrailUpdate);
+  updateTrail();
+}
+
+function initializeContactPreview() {
+  const form = document.querySelector("#contact-question");
+  if (!form) return;
+  const status = form.querySelector(".contact-card__status");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    status.textContent = "Thanks! In the Shopify build, this sends directly through the store’s contact system.";
+    status.hidden = false;
+    form.reset();
+  });
+
+  form.addEventListener("input", () => {
+    status.hidden = true;
+  });
+}
+
 function initializePreview() {
   initializeMotion();
   initializeAccordions();
   initializeCountdown();
   initializeScrollProgress();
   initializeTilt();
+  initializeMagneticButtons();
+  initializeSectionTransitions();
+  initializeScrollTrail();
+  initializeContactPreview();
   const form = document.querySelector("#game-chooser");
   const result = document.querySelector("#chooser-result");
   const error = document.querySelector("#chooser-error");

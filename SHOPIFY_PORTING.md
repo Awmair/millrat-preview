@@ -17,7 +17,7 @@ The preview deliberately mirrors Shopify Online Store theme architecture without
 | Unboxing | `sections/unboxing-feature.liquid` |
 | Kickstarter status | `sections/campaign-status.liquid` with the official Kickstarter card embed and deadline setting |
 | FAQ | `sections/faq.liquid` with question blocks |
-| Final CTA | `sections/campaign-cta.liquid` |
+| Final CTA and questions form | `sections/campaign-cta.liquid` using Shopify’s native `{% form 'contact' %}` |
 | Footer | `sections/footer.liquid` inside `sections/footer-group.json` |
 
 The homepage becomes `templates/index.json`, listing these sections in the approved order.
@@ -33,6 +33,10 @@ The chooser’s game records currently live in `assets/js/main.js`. In Shopify:
 5. Preserve the current filtering, deterministic tie-breaking, result display, focus transfer and reduced-motion handling.
 
 No app or backend is required.
+
+## Contact form migration
+
+The GitHub preview demonstrates the form layout and validation without pretending to send data. In Shopify, wrap the same Name, Email and Question fields in Shopify’s native `{% form 'contact' %}` tag so submissions use the store’s contact system without a third-party form service.
 
 ## Theme settings
 
@@ -61,7 +65,7 @@ The preview links to the current Kickstarter campaign. When MILLRAT Pack! exists
 - Semantic HTML is already section-scoped through `data-section` attributes.
 - Styling is centralized, responsive and free from framework dependencies.
 - JavaScript uses no packages or build tooling.
-- Motion uses CSS keyframes, hover states, native pointer events and a small `IntersectionObserver`; the live hero badge, image tilt, moving strip, accordion steps and chooser celebration can move directly into Shopify theme assets without an app.
+- Motion uses CSS keyframes, hover states, native pointer events and small `IntersectionObserver` helpers; the magnetic CTAs, fanning game cards, section wipes, scroll trail, image tilt, moving strip, accordion steps and chooser celebration can move directly into Shopify theme assets without an app.
 - Reduced-motion preferences soften or slow the decorative motion while preserving the continuous campaign strip and visible content.
 - External campaign images must be replaced with originals supplied by MILLRAT Studio.
 - No account, checkout, search or customer logic is simulated in the preview.
