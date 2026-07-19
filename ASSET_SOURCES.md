@@ -15,7 +15,8 @@ The source workspace did not contain downloadable MILLRAT asset files. To avoid 
 | Nick and Adam | `https://images.backerkit.com/active_storage/backerkit_production/blob/vss1gqonro5n0t0xfa58cxu9m2bw` |
 | Pack lifestyle/about image | `https://images.backerkit.com/active_storage/backerkit_production/blob/y4v7p4reqro0g3w0le2kbgk66kmy` |
 | Production-copy/unboxing image | `https://images.backerkit.com/active_storage/backerkit_production/blob/29sqhtn9d3qb2tjcruizyf5je2yu` |
+| Official MILLRAT Studio logo | `https://s3.amazonaws.com/files.thegamecrafter.com/4a4e7e09fdad6f18bace1bf2d6fc23a41a7621a9` from the official [MILLRAT Studio designer profile](https://www.thegamecrafter.com/designers/millrat-studio) |
 
-No standalone official logo file was available. The preview therefore uses the name `MILLRAT Studio` as text in navigation while preserving the official logo only as it appears within official product imagery. No logo or branded product graphic was generated.
+The official logo is stored locally as `assets/images/millrat-logo.jpg` and used without alteration in the header and footer. No logo or branded product graphic was generated.
 
 Decorative paper, tape, dots, borders and sticker treatments are CSS only. No stock or AI-generated imagery is used.

@@ -48,7 +48,7 @@ Per-section settings should override global defaults when required. Images shoul
 
 ## Product integration
 
-The preview links to the current BackerKit campaign. When MILLRAT Pack! exists as a Shopify product:
+The preview links to the current Kickstarter campaign. When MILLRAT Pack! exists as a Shopify product:
 
 - Add a product-picker setting to CTA-bearing sections.
 - Replace campaign CTAs with the selected product URL or product form.
@@ -60,5 +60,7 @@ The preview links to the current BackerKit campaign. When MILLRAT Pack! exists a
 - Semantic HTML is already section-scoped through `data-section` attributes.
 - Styling is centralized, responsive and free from framework dependencies.
 - JavaScript uses no packages or build tooling.
+- Motion uses CSS keyframes, hover states and a small native `IntersectionObserver`; these can move directly into Shopify theme assets without an app.
+- Reduced-motion preferences disable the marquee, floating artwork and scroll-reveal transitions.
 - External campaign images must be replaced with originals supplied by MILLRAT Studio.
 - No account, checkout, search or customer logic is simulated in the preview.

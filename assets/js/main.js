@@ -1,5 +1,7 @@
 const GAME_ORDER = ["someones-y", "scrapbook", "footfalls", "bad-eggs"];
 
+if (typeof document !== "undefined") document.documentElement.classList.add("js");
+
 const GAMES = {
   "someones-y": {
     title: "Someone’s Y",
@@ -56,7 +58,48 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function initializeMotion() {
+  const targets = document.querySelectorAll([
+    ".section-heading",
+    ".lineup__image",
+    ".game-tabs",
+    ".chooser__intro",
+    ".chooser__form",
+    ".game-panel__image",
+    ".game-panel__copy",
+    ".play-anywhere__copy",
+    ".play-anywhere__image",
+    ".story__image",
+    ".story__copy",
+    ".unboxing__copy",
+    ".unboxing__image",
+    ".faq__list",
+    ".final-cta__copy"
+  ].join(","));
+
+  targets.forEach((target, index) => {
+    target.classList.add("reveal");
+    target.classList.add(index % 2 === 0 ? "reveal--left" : "reveal--right");
+  });
+
+  if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
+    targets.forEach((target) => target.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -7%" });
+
+  targets.forEach((target) => observer.observe(target));
+}
+
 function initializePreview() {
+  initializeMotion();
   const form = document.querySelector("#game-chooser");
   const result = document.querySelector("#chooser-result");
   const error = document.querySelector("#chooser-error");
@@ -69,6 +112,7 @@ function initializePreview() {
 
   function showRecommendation(game, players, time) {
     recommendedGame = game;
+    resultImage.hidden = false;
     resultImage.src = game.image;
     resultImage.alt = `${game.title} game artwork and components`;
     resultTitle.textContent = game.title;
@@ -81,6 +125,7 @@ function initializePreview() {
 
   function showNoMatch() {
     recommendedGame = null;
+    resultImage.hidden = true;
     resultImage.removeAttribute("src");
     resultImage.alt = "";
     resultTitle.textContent = "No exact match yet";
@@ -138,6 +183,7 @@ function initializePreview() {
       if (!target) return;
       event.preventDefault();
       target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+      if (link.classList.contains("skip-link")) target.focus({ preventScroll: true });
     });
   });
 }
