@@ -83,7 +83,7 @@ button { color: inherit; }
 .tape--two { right: -25px; bottom: 8%; transform: rotate(-65deg); }
 .tape--three { top: -10px; left: 40%; transform: rotate(4deg); }
 
-.marquee { overflow: hidden; color: var(--paper-bright); background: var(--ink); border-block: 2px solid var(--ink); transform: rotate(-.5deg) scale(1.01); }
+.marquee { position: relative; overflow: hidden; color: var(--paper-bright); background: var(--ink); border: 0; box-shadow: inset 0 3px 0 var(--ink), inset 0 -3px 0 var(--ink); }
 .marquee__track { display: flex; width: max-content; will-change: transform; animation: marquee-scroll 24s linear infinite; }
 .marquee__group { display: flex; flex-shrink: 0; gap: 26px; align-items: center; min-width: max-content; padding: 16px 26px 16px 0; font: 900 .88rem/1 var(--body); letter-spacing: .09em; }
 .marquee i { color: var(--yellow); font-style: normal; }
@@ -236,12 +236,12 @@ legend > span { display: inline-grid; place-items: center; width: 30px; height: 
 .faq details[open] summary span { transform: rotate(45deg); }
 .faq details p { max-width: 700px; margin: 0; padding: 0 40px 24px 4px; }
 
-.final-cta { position: relative; isolation: isolate; display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 650px; color: var(--white); background: var(--purple); overflow: hidden; }
-.final-cta__image { position: relative; align-self: stretch; min-height: 650px; overflow: hidden; }
-.final-cta__image img { height: 100%; object-fit: cover; clip-path: polygon(0 0, 93% 0, 100% 100%, 0 100%); }
-.final-cta__copy { padding: 70px max(24px, calc((100vw - var(--max-width)) / 2)); padding-left: clamp(40px, 6vw, 100px); }
+.final-cta { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; min-height: 700px; color: var(--white); background: var(--purple); overflow: hidden; }
+.final-cta__image { position: relative; display: grid; min-height: 700px; overflow: hidden; }
+.final-cta__image img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; clip-path: polygon(0 0, 93% 0, 100% 100%, 0 100%); }
+.final-cta__copy { align-self: center; justify-self: start; width: 100%; max-width: 700px; padding: 70px max(24px, calc((100vw - var(--max-width)) / 2)); padding-left: clamp(40px, 6vw, 100px); }
 .final-cta__copy p:not(.eyebrow) { max-width: 520px; font-size: 1.15rem; }
-.contact-card { position: absolute; z-index: 3; left: clamp(20px, 4vw, 66px); bottom: clamp(24px, 5vw, 70px); display: grid; gap: 16px; width: min(470px, calc(100% - 44px)); padding: 24px; color: var(--ink); background: rgba(255,253,246,.97); border: 3px solid var(--ink); border-radius: 22px 15px 25px 17px; box-shadow: 0 25px 55px rgba(19,5,27,.42); transform: rotate(-1deg); backdrop-filter: blur(8px); }
+.contact-card { position: relative; z-index: 3; grid-area: 1 / 1; align-self: center; justify-self: center; display: grid; gap: 16px; box-sizing: border-box; width: min(470px, calc(100% - 64px)); margin: 32px; padding: 24px; color: var(--ink); background: rgba(255,253,246,.97); border: 3px solid var(--ink); border-radius: 22px 15px 25px 17px; box-shadow: 0 25px 55px rgba(19,5,27,.42); backdrop-filter: blur(8px); }
 .contact-card__heading .eyebrow { margin-bottom: 4px; color: var(--purple); }
 .contact-card__heading h3 { margin: 0; font: 950 clamp(1.8rem, 3vw, 2.6rem)/.95 var(--display); letter-spacing: -.045em; text-transform: uppercase; }
 .contact-card__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -399,8 +399,8 @@ legend > span { display: inline-grid; place-items: center; width: 30px; height: 
   .play-badge { width: 90px; height: 90px; right: 12px; bottom: 12px; }
   .faq { gap: 45px; }
   .final-cta__image { display: grid; min-height: 0; max-height: none; overflow: visible; }
-  .final-cta__image img { height: 330px; }
-  .contact-card { position: relative; left: auto; bottom: auto; width: calc(100% - 32px); margin: -38px 16px 34px; padding: 20px 17px; transform: rotate(-.5deg); }
+  .final-cta__image img { grid-area: auto; height: 330px; }
+  .contact-card { grid-area: auto; width: calc(100% - 32px); margin: -38px 16px 34px; padding: 20px 17px; }
   .contact-card__fields { grid-template-columns: 1fr; }
   .contact-card__question { grid-column: auto; }
   .final-cta__copy { padding: 70px 20px 90px; }
