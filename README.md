@@ -10,8 +10,10 @@ This repository contains a static homepage preview created exclusively for MILLR
 
 - One expanded, responsive homepage
 - Four-game overview and detailed game sections
+- Animated, collapsible how-to-play panels sourced from the official campaign
 - Functional “What should we play?” chooser
-- Founder story, play contexts, FAQ and official campaign calls to action
+- Live Kickstarter status card and deadline countdown
+- Founder story, play contexts, FAQ and official Kickstarter calls to action
 - Plain HTML, modular CSS and vanilla JavaScript
 - No framework, backend, paid app or build step
 

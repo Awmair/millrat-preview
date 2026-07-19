@@ -11,10 +11,11 @@ The preview deliberately mirrors Shopify Online Store theme architecture without
 | Play-context strip | `sections/play-context-strip.liquid` with repeatable text blocks |
 | Lineup overview | `sections/game-lineup.liquid` with image picker and four game blocks |
 | Game chooser | `sections/game-chooser.liquid` with game blocks and the existing vanilla JavaScript |
-| Game showcases | Four instances of `sections/game-feature.liquid`, or one section with four repeatable game blocks |
+| Game showcases | Four instances of `sections/game-feature.liquid`, or one section with four repeatable game blocks, including the animated rules accordion |
 | Play contexts | `sections/image-with-play-contexts.liquid` |
 | Founder story | `sections/founder-story.liquid` |
 | Unboxing | `sections/unboxing-feature.liquid` |
+| Kickstarter status | `sections/campaign-status.liquid` with the official Kickstarter card embed and deadline setting |
 | FAQ | `sections/faq.liquid` with question blocks |
 | Final CTA | `sections/campaign-cta.liquid` |
 | Footer | `sections/footer.liquid` inside `sections/footer-group.json` |
@@ -61,6 +62,6 @@ The preview links to the current Kickstarter campaign. When MILLRAT Pack! exists
 - Styling is centralized, responsive and free from framework dependencies.
 - JavaScript uses no packages or build tooling.
 - Motion uses CSS keyframes, hover states and a small native `IntersectionObserver`; these can move directly into Shopify theme assets without an app.
-- Reduced-motion preferences disable the marquee, floating artwork and scroll-reveal transitions.
+- Reduced-motion preferences soften or slow the decorative motion while preserving the continuous campaign strip and visible content.
 - External campaign images must be replaced with originals supplied by MILLRAT Studio.
 - No account, checkout, search or customer logic is simulated in the preview.

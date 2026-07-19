@@ -73,6 +73,8 @@ function initializeMotion() {
     ".story__copy",
     ".unboxing__copy",
     ".unboxing__image",
+    ".campaign-status__copy",
+    ".kickstarter-card",
     ".faq__list",
     ".final-cta__copy"
   ].join(","));
@@ -98,8 +100,100 @@ function initializeMotion() {
   targets.forEach((target) => observer.observe(target));
 }
 
+function initializeAccordions() {
+  document.querySelectorAll("[data-rules]").forEach((accordion) => {
+    const button = accordion.querySelector(".rules-toggle");
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+      const isOpen = accordion.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", String(isOpen));
+    });
+  });
+}
+
+function initializeCountdown() {
+  const countdown = document.querySelector(".campaign-countdown[data-deadline]");
+  if (!countdown) return;
+
+  const deadline = new Date(countdown.dataset.deadline).getTime();
+  const days = countdown.querySelector("[data-days]");
+  const hours = countdown.querySelector("[data-hours]");
+  const label = countdown.querySelector("[data-countdown-label]");
+
+  function updateCountdown() {
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) {
+      days.textContent = "0";
+      hours.textContent = "0";
+      label.textContent = "the campaign has ended";
+      return;
+    }
+
+    const totalHours = Math.floor(remaining / 3600000);
+    days.textContent = String(Math.floor(totalHours / 24));
+    hours.textContent = String(totalHours % 24);
+    label.textContent = "left to join the campaign";
+  }
+
+  updateCountdown();
+  window.setInterval(updateCountdown, 60000);
+}
+
+function initializeScrollProgress() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+  let scheduled = false;
+
+  function updateProgress() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(100, Math.max(0, window.scrollY / scrollable * 100)) : 0;
+    header.style.setProperty("--scroll-progress", `${progress}%`);
+    scheduled = false;
+  }
+
+  window.addEventListener("scroll", () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(updateProgress);
+  }, { passive: true });
+  updateProgress();
+}
+
+function initializeTilt() {
+  if (prefersReducedMotion() || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  document.querySelectorAll([
+    ".hero__visual",
+    ".lineup__image",
+    ".game-panel__image",
+    ".play-anywhere__image",
+    ".story__image",
+    ".unboxing__image"
+  ].join(",")).forEach((target) => {
+    target.classList.add("motion-tilt");
+
+    target.addEventListener("pointermove", (event) => {
+      const bounds = target.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - .5;
+      const y = (event.clientY - bounds.top) / bounds.height - .5;
+      target.style.setProperty("--tilt-x", `${(-y * 4).toFixed(2)}deg`);
+      target.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+    });
+
+    target.addEventListener("pointerleave", () => {
+      target.style.setProperty("--tilt-x", "0deg");
+      target.style.setProperty("--tilt-y", "0deg");
+    });
+  });
+}
+
 function initializePreview() {
   initializeMotion();
+  initializeAccordions();
+  initializeCountdown();
+  initializeScrollProgress();
+  initializeTilt();
   const form = document.querySelector("#game-chooser");
   const result = document.querySelector("#chooser-result");
   const error = document.querySelector("#chooser-error");
